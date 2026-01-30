@@ -1,11 +1,11 @@
 import 'package:blocdemo/app/app_theme.dart';
-import 'package:blocdemo/app/router.dart';
+import 'package:blocdemo/feature/todo/presentation/pages/todo_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:get/get.dart';
 
 class App extends StatelessWidget {
-  App({super.key});
-  final router = buildRouter();
+  const App({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -20,9 +20,9 @@ class App extends StatelessWidget {
           systemNavigationBarColor: Colors.white,
           systemNavigationBarIconBrightness: Brightness.dark,
         ),
-        child: MaterialApp.router(
+        child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          routerConfig: router,
+          home: const TodoPage(),
           theme: AppTheme().lightTheme,
         ),
       ),

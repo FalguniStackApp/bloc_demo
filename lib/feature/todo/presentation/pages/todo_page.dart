@@ -1,68 +1,60 @@
 import 'package:blocdemo/core/constant/app_colors.dart';
 import 'package:blocdemo/core/constant/app_strings.dart';
-import 'package:blocdemo/feature/todo/presentation/bloc/todo_bloc.dart';
-import 'package:blocdemo/feature/todo/presentation/bloc/todo_state.dart';
-import 'package:blocdemo/feature/todo/presentation/view_models/todo_view_model.dart';
+import 'package:blocdemo/core/di/injection.dart';
+import 'package:blocdemo/feature/todo/domain/repositories/todo_repository.dart';
+import 'package:blocdemo/feature/todo/presentation/controller/todo_controller.dart';
+import 'package:blocdemo/feature/todo/presentation/view_model/todo_view_model.dart';
 import 'package:blocdemo/feature/todo/presentation/widget/task_detail_tile.dart';
+import 'package:blocdemo/shared%20/widget/app_button.dart';
 import 'package:blocdemo/shared%20/widget/app_text.dart';
+import 'package:blocdemo/shared%20/widget/app_textfield.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:get/get.dart';
 
-import '../../../../shared /widget/app_button.dart';
-import '../../../../shared /widget/app_textfield.dart';
-
-class TodoPage extends StatefulWidget {
+class TodoPage extends StatelessWidget {
   const TodoPage({super.key});
 
   @override
-  State<TodoPage> createState() => _TodoPageState();
-}
-
-class _TodoPageState extends State<TodoPage> {
-  late final TodoViewModel vm;
-
-  @override
-  void initState() {
-    super.initState();
-    vm = TodoViewModel(context.read<TodoBloc>());
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Controller handles data
+    final controller = Get.put(TodoController(sl<TodoRepository>()));
+    // ViewModel handles UI logic and interactions
+    final viewModel = Get.put(TodoViewModel(controller));
+
     return Scaffold(
       appBar: appbarView(),
-      body: BlocBuilder<TodoBloc, TodoState>(
-        builder: (context, state) {
-          if (state.status == TodoStatus.loading) {
-            return Center(child: CircularProgressIndicator());
+      body: Obx(
+        () {
+          if (controller.status.value == TodoStatus.loading) {
+            return const Center(child: CircularProgressIndicator());
           }
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 10,vertical: 20),
+            padding: const EdgeInsets.symmetric(horizontal: 10, vertical: 20),
             child: Column(
               spacing: 20,
               children: [
                 AppTextField(
-                  controller: vm.todoTC,
-                  hintText: '${state.editIndex == null ? AppStrings.add : AppStrings.update} ${AppStrings.task}',
+                  controller: viewModel.todoTC,
+                  hintText: '${viewModel.editIndex.value == null ? AppStrings.add : AppStrings.update} ${AppStrings.task}',
                 ),
                 AppButton(
-                  text: (state.editIndex == null ? AppStrings.add : AppStrings.update).toUpperCase(),
+                  text: (viewModel.editIndex.value == null ? AppStrings.add : AppStrings.update).toUpperCase(),
                   width: 100,
-                  onPressed: () => vm.addTodoTask(context),
+                  onPressed: () => viewModel.addTodoTask(context),
                 ),
-                SizedBox(height: 5,),
-                Expanded(child:
-                state.todoList.isEmpty
-                    ? AppText(AppStrings.noDataAvailable)
-                    : ListView.builder(
-                  itemCount: state.todoList.length,
-                  itemBuilder: (_, i) {
-                    return TaskDetailTile(title: state.todoList[i].title,
-                      index: i,
-                      vm: vm,);
-                  }
-                  ,
-                ))
+                Expanded(
+                    child: controller.todoList.isEmpty
+                        ? AppText(AppStrings.noDataAvailable)
+                        : ListView.builder(
+                            itemCount: controller.todoList.length,
+                            itemBuilder: (_, i) {
+                              return TaskDetailTile(
+                                title: controller.todoList[i].title,
+                                index: i,
+                                vm: viewModel,
+                              );
+                            },
+                          ))
               ],
             ),
           );
@@ -71,7 +63,7 @@ class _TodoPageState extends State<TodoPage> {
     );
   }
 
-  AppBar appbarView(){
+  AppBar appbarView() {
     return AppBar(
       title: AppText(
         AppStrings.appName,

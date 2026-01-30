@@ -1,5 +1,5 @@
 import 'package:blocdemo/core/constant/app_colors.dart';
-import 'package:blocdemo/feature/todo/presentation/view_models/todo_view_model.dart';
+import 'package:blocdemo/feature/todo/presentation/view_model/todo_view_model.dart';
 import 'package:blocdemo/shared%20/widget/app_text.dart';
 import 'package:flutter/material.dart';
 
@@ -27,7 +27,7 @@ class TaskDetailTile extends StatelessWidget {
           Expanded(child: AppText(title)),
           SizedBox(width: 10,),
           InkWell(
-              onTap: () => vm.editTodoTask(index),
+              onTap: () => vm.onEdit(index),
               child: Padding(
                 padding: const EdgeInsets.all(8.0),
                 child: Icon(
