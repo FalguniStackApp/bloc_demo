@@ -2,7 +2,7 @@ import 'package:blocdemo/core/constant/app_colors.dart';
 import 'package:flutter/material.dart';
 
 
-class CommonButton extends StatelessWidget {
+class AppButton extends StatelessWidget {
   final String text;
   final VoidCallback? onPressed;
   final Color? backgroundColor;
@@ -17,7 +17,7 @@ class CommonButton extends StatelessWidget {
   final Widget? icon;
   final double iconSpacing;
 
-  const CommonButton({
+  const AppButton({
     super.key,
     required this.text,
     this.onPressed,

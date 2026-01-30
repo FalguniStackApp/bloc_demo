@@ -3,7 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-class CommonTextField extends StatefulWidget {
+class AppTextField extends StatefulWidget {
   final TextEditingController? controller;
   final String? initialValue;
   final Color? textFieldColor;
@@ -32,7 +32,7 @@ class CommonTextField extends StatefulWidget {
   final Widget? suffixIcon;
   final Color? fillColor;
 
-  const CommonTextField({
+  const AppTextField({
     super.key,
     this.controller,
     this.initialValue,
@@ -64,10 +64,10 @@ class CommonTextField extends StatefulWidget {
   });
 
   @override
-  State<CommonTextField> createState() => _CommonTextFieldState();
+  State<AppTextField> createState() => _AppTextFieldState();
 }
 
-class _CommonTextFieldState extends State<CommonTextField> {
+class _AppTextFieldState extends State<AppTextField> {
   bool showPassword = false;
   late TextEditingController _internalController;
 
@@ -79,7 +79,7 @@ class _CommonTextFieldState extends State<CommonTextField> {
   }
 
   @override
-  void didUpdateWidget(CommonTextField oldWidget) {
+  void didUpdateWidget(AppTextField oldWidget) {
     super.didUpdateWidget(oldWidget);
     if (widget.controller == null) {
       final newText = widget.initialValue ?? '';

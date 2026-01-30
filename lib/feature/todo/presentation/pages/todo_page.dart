@@ -5,10 +5,11 @@ import 'package:blocdemo/feature/todo/presentation/bloc/todo_state.dart';
 import 'package:blocdemo/feature/todo/presentation/view_models/todo_view_model.dart';
 import 'package:blocdemo/feature/todo/presentation/widget/task_detail_tile.dart';
 import 'package:blocdemo/shared%20/widget/app_text.dart';
-import 'package:blocdemo/shared%20/widget/common_button.dart';
-import 'package:blocdemo/shared%20/widget/common_textfield.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+
+import '../../../../shared /widget/app_button.dart';
+import '../../../../shared /widget/app_textfield.dart';
 
 class TodoPage extends StatefulWidget {
   const TodoPage({super.key});
@@ -40,11 +41,11 @@ class _TodoPageState extends State<TodoPage> {
             child: Column(
               spacing: 20,
               children: [
-                CommonTextField(
+                AppTextField(
                   controller: vm.todoTC,
                   hintText: '${state.editIndex == null ? AppStrings.add : AppStrings.update} ${AppStrings.task}',
                 ),
-                CommonButton(
+                AppButton(
                   text: (state.editIndex == null ? AppStrings.add : AppStrings.update).toUpperCase(),
                   width: 100,
                   onPressed: () => vm.addTodoTask(context),
