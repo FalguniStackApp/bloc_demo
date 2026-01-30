@@ -1,4 +1,4 @@
-import 'package:blocdemo/shared%20/helper/extension_helper.dart';
+import 'package:blocdemo/shared/helper/extension_helper.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class SimpleBlocObserver extends BlocObserver {

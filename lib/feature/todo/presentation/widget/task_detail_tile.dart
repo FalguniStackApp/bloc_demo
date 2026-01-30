@@ -1,6 +1,6 @@
 import 'package:blocdemo/core/constant/app_colors.dart';
 import 'package:blocdemo/feature/todo/presentation/view_models/todo_view_model.dart';
-import 'package:blocdemo/shared%20/widget/app_text.dart';
+import 'package:blocdemo/shared/widget/app_text.dart';
 import 'package:flutter/material.dart';
 
 class TaskDetailTile extends StatelessWidget {

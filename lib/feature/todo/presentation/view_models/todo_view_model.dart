@@ -3,7 +3,7 @@ import 'package:blocdemo/feature/todo/presentation/bloc/todo_bloc.dart';
 import 'package:blocdemo/feature/todo/presentation/bloc/todo_event.dart';
 import 'package:flutter/material.dart';
 
-import '../../../../shared /helper/extension_helper.dart';
+import '../../../../shared/helper/extension_helper.dart';
 
 class TodoViewModel extends ChangeNotifier {
   final TodoBloc _todoBloc;

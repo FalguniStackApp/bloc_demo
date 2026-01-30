@@ -1,157 +1,65 @@
-## Bloc Demo
+## BLoC Todo App with ViewModel
 
-A Flutter application demonstrating BLoC State Management with Clean Architecture and Local Data Persistence using SharedPreferences.
+A Flutter application demonstrating BLoC State Management combined with the ViewModel pattern, following Clean Architecture principles.
 
-This project is created to understand how to build a scalable Flutter app using proper folder structure and separation of concerns.
+### ✨ Features
 
-✨ Features
+- Add, Update, Delete Todo Tasks
+- Persistent Local Storage (SharedPreferences)
+- **BLoC State Management** (Global/Data State)
+- **ViewModel Pattern** (UI Logic & Form Handling)
+- Clean Architecture Structure
+- **Dependency Injection** (GetIt)
 
-Add Todo Task
-
-Update Todo Task
-
-Delete Todo Task
-
-Persistent Local Storage
-
-BLoC State Management
-
-Clean Architecture Structure
-
-Dependency Injection with GetIt
-
-🏗 Project Architecture
+### 🏗 Project Architecture
 
 This project follows Clean Architecture with a Feature-Based Structure.
 
+```
 lib/
 │
-├── core/                     # Common utilities, constants, helpers
+├── core/                       # Common utilities, constants, DI
+│   └── di/                     # Dependency Injection (GetIt)
 │
 ├── feature/
 │   └── todo/
-│       ├── data/
-│       │   ├── datasources/
-│       │   ├── models/
-│       │   └── repositories/
-│       │
-│       ├── domain/
-│       │   ├── entities/
-│       │   ├── repositories/
-│       │   └── usecases/
-│       │
+│       ├── data/               # Repositories & DataSources
+│       ├── domain/             # Entities, Repositories, UseCases
 │       └── presentation/
-│           ├── bloc/
-│           ├── pages/
-│           └── widgets/
+│           ├── bloc/           # BLoC (Events & States)
+│           ├── view_models/    # ViewModels (UI Logic)
+│           ├── pages/          # UI Views
+│           └── widget/         # Reusable Widgets
 │
-├── injection_container.dart
+├── shared/                     # Shared widgets and helpers
 └── main.dart
+```
 
-🧠 State Management
+### 🧠 Architecture Patterns
 
-This app uses:
+#### 1. BLoC (Business Logic Component)
+- **Responsibility**: Manages the *Global Data State* (e.g., list of todos, loading status, error messages).
+- **Files**: `todo_bloc.dart`, `todo_event.dart`, `todo_state.dart`.
+- **Why**: Ensures predictably state management and separates business logic from UI.
 
-bloc
+#### 2. ViewModel
+- **Responsibility**: Manages strictly *UI Logic* and *Form State* (e.g., `TextEditingController`, handling button taps, input validation).
+- **Files**: `todo_view_model.dart`.
+- **Interaction**: The ViewModel takes user input, validates it, and then adds events to the BLoC. It does *not* hold business data.
 
-flutter_bloc
+#### 3. View (Page)
+- **Responsibility**: Renders the UI based on BLoC state.
+- **Files**: `todo_page.dart`.
+- **Interaction**: Uses `BlocBuilder` to listen to state changes and `TodoViewModel` to handle user actions.
 
-equatable
+### � Dependencies
 
-Why BLoC?
+- `flutter_bloc`: State management.
+- `equatable`: Value equality for states/events.
+- `get_it`: Service locator for Dependency Injection.
+- `shared_preferences`: Local storage.
 
-Predictable state flow
+### 🚀 Getting Started
 
-Clear separation between UI and logic
-
-Easy testing
-
-Scalable for large applications
-
-📦 Dependencies
-flutter_bloc:
-bloc:
-equatable:
-get_it:
-shared_preferences:
-
-🔄 Data Flow
-UI → Bloc → UseCase → Repository → DataSource → Local Storage
-
-
-Presentation Layer → UI + Bloc
-
-Domain Layer → Business Logic & Entities
-
-Data Layer → Models, DataSources, Storage
-
-💾 Local Storage
-
-Todos are stored using SharedPreferences as JSON.
-
-Example stored data:
-
-[
-{"id":1,"title":"Learn BLoC"},
-{"id":2,"title":"Build Todo App"}
-]
-
-🚀 Getting Started
-Prerequisites
-
-Flutter SDK installed
-
-Android Studio / VS Code
-
-Emulator or Physical Device
-
-Installation
-flutter pub get
-flutter run
-
-📌 BLoC Events
-
-LoadTodos
-
-AddTodos
-
-UpdateTodos
-
-DeleteTodos
-
-📌 BLoC States
-
-Initial
-
-Loading
-
-Loaded
-
-Error
-
-🧩 Dependency Injection
-
-Managed using GetIt.
-
-Example:
-
-sl.registerFactory(() => TodoBloc(sl()));
-sl.registerLazySingleton(() => GetTodos(sl()));
-sl.registerLazySingleton<TodoRepository>(() => TodoRepositoryImpl(sl()));
-sl.registerLazySingleton(() => TodoLocalDataSource());
-
-📚 Learning Purpose
-
-This project helps in understanding:
-
-Clean Architecture in Flutter
-
-BLoC Pattern
-
-Local Data Persistence
-
-Dependency Injection
-
-Feature-based Folder Structure
-
-Immutable State Handling
+1.  `flutter pub get`
+2.  `flutter run`
