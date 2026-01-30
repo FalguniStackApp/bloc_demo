@@ -13,12 +13,19 @@ class TodoState extends Equatable {
   final String? message;
   final List<TodoEntity> todoList;
   final int? editIndex;
+  final bool isClearEdit;
 
-  const TodoState({this.todoList = const [],required this.status,this.message,this.editIndex});
+  const TodoState({
+    this.todoList = const [],
+    required this.status,
+    this.message,
+    this.editIndex,
+    this.isClearEdit = false,
+  });
 
   factory TodoState.initial() => const TodoState(
-    status: TodoStatus.initial,
-  );
+        status: TodoStatus.initial,
+      );
 
   TodoState copyWith({
     TodoStatus? status,
@@ -31,13 +38,11 @@ class TodoState extends Equatable {
       status: status ?? this.status,
       message: message ?? this.message,
       todoList: todoList ?? this.todoList,
-      editIndex: isClearEdit ? null : editIndex ?? this.editIndex
+      editIndex: isClearEdit ? null : editIndex ?? this.editIndex,
+      isClearEdit: isClearEdit,
     );
   }
 
   @override
-  // TODO: implement props
-  List<Object?> get props => [status,message,todoList,editIndex];
-
+  List<Object?> get props => [status, message, todoList, editIndex, isClearEdit];
 }
-

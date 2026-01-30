@@ -36,8 +36,6 @@ dependencies:
   cupertino_icons: ^1.0.8
 
   # Fetch server data & State management :
-  flutter_bloc: ^9.1.1
-  bloc: ^9.2.0
   equatable: ^2.0.8
   url_launcher: ^6.3.2
   shared_preferences: ^2.2.3
@@ -47,10 +45,10 @@ dependencies:
 
   # Routes :
   go_router: 16.2.4
-  get_it: ^9.2.0
 
   # Logger :
   logger: ^2.6.1
+  flutter_riverpod: ^3.2.0
 
 dev_dependencies:
   flutter_test:
