@@ -1,5 +1,6 @@
 import 'package:blocdemo/app/app_theme.dart';
-import 'package:blocdemo/feature/todo/presentation/pages/todo_page.dart';
+import 'package:blocdemo/app/bindings/initial_binding.dart';
+import 'package:blocdemo/app/routes/route_helper.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
@@ -22,7 +23,9 @@ class App extends StatelessWidget {
         ),
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
-          home: const TodoPage(),
+          initialBinding: InitialBinding(),
+          initialRoute: RouteHelper.routeInitial,
+          getPages: RouteHelper.routes,
           theme: AppTheme().lightTheme,
         ),
       ),

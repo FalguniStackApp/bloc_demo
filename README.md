@@ -1,157 +1,71 @@
-## Bloc Demo
+## GetX Todo App
 
-A Flutter application demonstrating BLoC State Management with Clean Architecture and Local Data Persistence using SharedPreferences.
+A Flutter application demonstrating GetX State Management with MVVM Architecture, Clean Architecture, and Local Data Persistence.
 
-This project is created to understand how to build a scalable Flutter app using proper folder structure and separation of concerns.
+### ✨ Features
 
-✨ Features
+- Add, Update, Delete Todo Tasks
+- Persistent Local Storage (SharedPreferences)
+- **GetX State Management** (Reactive)
+- **MVVM Architecture** (Model-View-ViewModel)
+- Clean Architecture Structure
+- **Centralized Dependency Injection** (GetX Bindings)
+- **Centralized Routing**
 
-Add Todo Task
+### 🏗 Project Architecture
 
-Update Todo Task
+This project follows Clean Architecture with a Feature-Based Structure and MVVM.
 
-Delete Todo Task
-
-Persistent Local Storage
-
-BLoC State Management
-
-Clean Architecture Structure
-
-Dependency Injection with GetIt
-
-🏗 Project Architecture
-
-This project follows Clean Architecture with a Feature-Based Structure.
-
+```
 lib/
 │
-├── core/                     # Common utilities, constants, helpers
+├── app/                        # App-wide configurations
+│   ├── bindings/               # Global Bindings (InitialBinding)
+│   ├── routes/                 # Centralized Routing
+│   └── app.dart                # App Entry Point
+│
+├── core/                       # Common utilities, constants
 │
 ├── feature/
 │   └── todo/
-│       ├── data/
-│       │   ├── datasources/
-│       │   ├── models/
-│       │   └── repositories/
-│       │
-│       ├── domain/
-│       │   ├── entities/
-│       │   ├── repositories/
-│       │   └── usecases/
-│       │
+│       ├── data/               # Repositories & DataSources
+│       ├── domain/             # Entities & UseCases
 │       └── presentation/
-│           ├── bloc/
-│           ├── pages/
+│           ├── binding/        # Feature-specific Bindings
+│           ├── controller/     # Data Controller (State)
+│           ├── view_model/     # UI Logic & Interaction
+│           ├── pages/          # UI View
 │           └── widgets/
 │
-├── injection_container.dart
 └── main.dart
+```
 
-🧠 State Management
+### 🧠 State Management & MVVM
 
-This app uses:
+- **TodoController**: Acts as the *Source of Truth* for data. Manages `todoList` and `status`. It is pure data logic.
+- **TodoViewModel**: Handles *UI Logic* (Text Editing, Form Validation, button clicks). It bridges the View and the Data Controller.
+- **TodoPage**: The View. Listens to Controller state changes using `Obx`.
 
-bloc
+### 🧩 Dependency Injection (Bindings)
 
-flutter_bloc
+We use GetX's powerful dependency injection system, organized into two types of bindings to prevent data duplication and ensure optimal performance:
 
-equatable
+1.  **InitialBinding (`lib/app/bindings/initial_binding.dart`)**
+    - **Purpose**: Initializes *Global* dependencies that the app needs throughout its lifecycle (e.g., Repositories, Database Services, API Clients).
+    - **Usage**: Attached to `GetMaterialApp(initialBinding: ...)`
+    - **Why**: Ensures core services are always available.
 
-Why BLoC?
+2.  **Feature Bindings (e.g., `TodoBinding` in `lib/feature/todo/presentation/binding/`)**
+    - **Purpose**: Initializes *Feature-Specific* dependencies (Controllers, ViewModels).
+    - **Usage**: Attached to routes in `RouteHelper`.
+    - **Why**: Implementing **Lazy Loading**. Controllers are created only when the screen is opened and *destroyed* when closed, creating an efficient, memory-optimized app.
 
-Predictable state flow
+### 📦 Dependencies
 
-Clear separation between UI and logic
+- `get`: State management, navigation, dependency injection.
+- `shared_preferences`: Local storage.
 
-Easy testing
+### 🚀 Getting Started
 
-Scalable for large applications
-
-📦 Dependencies
-flutter_bloc:
-bloc:
-equatable:
-get_it:
-shared_preferences:
-
-🔄 Data Flow
-UI → Bloc → UseCase → Repository → DataSource → Local Storage
-
-
-Presentation Layer → UI + Bloc
-
-Domain Layer → Business Logic & Entities
-
-Data Layer → Models, DataSources, Storage
-
-💾 Local Storage
-
-Todos are stored using SharedPreferences as JSON.
-
-Example stored data:
-
-[
-{"id":1,"title":"Learn BLoC"},
-{"id":2,"title":"Build Todo App"}
-]
-
-🚀 Getting Started
-Prerequisites
-
-Flutter SDK installed
-
-Android Studio / VS Code
-
-Emulator or Physical Device
-
-Installation
-flutter pub get
-flutter run
-
-📌 BLoC Events
-
-LoadTodos
-
-AddTodos
-
-UpdateTodos
-
-DeleteTodos
-
-📌 BLoC States
-
-Initial
-
-Loading
-
-Loaded
-
-Error
-
-🧩 Dependency Injection
-
-Managed using GetIt.
-
-Example:
-
-sl.registerFactory(() => TodoBloc(sl()));
-sl.registerLazySingleton(() => GetTodos(sl()));
-sl.registerLazySingleton<TodoRepository>(() => TodoRepositoryImpl(sl()));
-sl.registerLazySingleton(() => TodoLocalDataSource());
-
-📚 Learning Purpose
-
-This project helps in understanding:
-
-Clean Architecture in Flutter
-
-BLoC Pattern
-
-Local Data Persistence
-
-Dependency Injection
-
-Feature-based Folder Structure
-
-Immutable State Handling
+1.  `flutter pub get`
+2.  `flutter run`

@@ -43,9 +43,6 @@ dependencies:
   # Connectivity
   internet_connection_checker: 1.0.0+1
 
-  # Routes :
-  get_it: ^9.2.0
-
   # Logger :
   logger: ^2.6.1
 
